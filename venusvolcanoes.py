@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from keras import Sequential
-from keras.layers import Dense,Conv2D,MaxPooling2D,Flatten,Dropout
+from keras.layers import Dense,Conv2D,MaxPooling2D,Flatten,Dropout,BatchNormalization
 from keras.optimizers import Adam
 from sklearn.preprocessing import StandardScaler
 from keras.preprocessing.image import ImageDataGenerator
@@ -59,16 +59,21 @@ def plot_image(n):
 def create_model():
     model = Sequential()
     model.add(Conv2D(110,kernel_size=(3,3),strides=(1,1),activation='relu',input_shape=(110,110,1)))
+    model.add(Conv2D(220,kernel_size=(3,3),activation='relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(BatchNormalization())
     model.add(Dropout(0.3))
     model.add(Conv2D(220,kernel_size=(3,3),activation='relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(BatchNormalization())
     model.add(Dropout(0.3))
     model.add(Conv2D(220,kernel_size=(3,3),activation='relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(BatchNormalization())
     model.add(Dropout(0.3))
     model.add(Conv2D(110,kernel_size=(3,3),activation='relu'))
     model.add(MaxPooling2D(pool_size=(2,2)))
+    model.add(BatchNormalization())
     model.add(Dropout(0.3))
     model.add(Flatten())
     model.add(Dense(4096,activation='relu'))
